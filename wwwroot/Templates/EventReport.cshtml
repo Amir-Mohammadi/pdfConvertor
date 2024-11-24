@@ -1,0 +1,76 @@
+﻿
+@using System.Collections.Generic
+@using System
+@using amandaReport.Core.Data.Domain
+@model IEnumerable<EventDto>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>گزارش گیری</title>
+    <style>
+        body {
+            font-family: vazir;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>گزارش رخدادها</h1>
+        <p>تاریخ گزارش: @DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")</p>
+    </header>
+    <table>
+        <thead>
+            <tr>
+                <th>ردیف</th>
+                <th>نوع شی</th>
+                <th>زون</th>
+                <th>واحد</th>
+                <th>آی‌پی</th>
+                <th>تصویر</th>
+                <th>زمان</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var rowNumber = 1;
+            }
+            @foreach (var eventDto in Model)
+            {
+                <tr>
+                    <td>@rowNumber</td>
+                    <td>@eventDto.object_type</td>
+                    <td>@eventDto.zone_id</td>
+                    <td>@eventDto.unit_id</td>
+                    <td>@eventDto.ip</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(eventDto.image))
+                        {
+                            <img src="@eventDto.image" alt="Event Image" width="50" />
+                        }
+                    </td>
+                    <td>@eventDto.datetime.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                </tr>
+                rowNumber++;
+            }
+        </tbody>
+    </table>
+</body>
+</html>
